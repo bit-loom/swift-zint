@@ -1,0 +1,310 @@
+/* aztec.h - Handles Aztec 2D Symbols */
+/*
+    libzint - the open source barcode library
+    Copyright (C) 2008-2026 Robin Stuart <rstuart114@gmail.com>
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions
+    are met:
+
+    1. Redistributions of source code must retain the above copyright
+       notice, this list of conditions and the following disclaimer.
+    2. Redistributions in binary form must reproduce the above copyright
+       notice, this list of conditions and the following disclaimer in the
+       documentation and/or other materials provided with the distribution.
+    3. Neither the name of the project nor the names of its contributors
+       may be used to endorse or promote products derived from this software
+       without specific prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+    ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+    OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+    HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+    LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+    OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+    SUCH DAMAGE.
+ */
+/* SPDX-License-Identifier: BSD-3-Clause */
+
+#ifndef Z_AZTEC_H
+#define Z_AZTEC_H
+
+/* 27 x 27 data grid */
+static const short AztecCompactMap[729] = {
+    609, 608, 411, 413, 415, 417, 419, 421,  423, 425,  427,  429,  431,  433,  435,  437,  439, 441,  443, 445, 447, 449, 451, 453, 455, 457, 459, /* 0 */
+    607, 606, 410, 412, 414, 416, 418, 420,  422, 424,  426,  428,  430,  432,  434,  436,  438, 440,  442, 444, 446, 448, 450, 452, 454, 456, 458, /* 1 */
+    605, 604, 409, 408, 243, 245, 247, 249,  251, 253,  255,  257,  259,  261,  263,  265,  267, 269,  271, 273, 275, 277, 279, 281, 283, 460, 461, /* 2 */
+    603, 602, 407, 406, 242, 244, 246, 248,  250, 252,  254,  256,  258,  260,  262,  264,  266, 268,  270, 272, 274, 276, 278, 280, 282, 462, 463, /* 3 */
+    601, 600, 405, 404, 241, 240, 107, 109,  111, 113,  115,  117,  119,  121,  123,  125,  127, 129,  131, 133, 135, 137, 139, 284, 285, 464, 465, /* 4 */
+    599, 598, 403, 402, 239, 238, 106, 108,  110, 112,  114,  116,  118,  120,  122,  124,  126, 128,  130, 132, 134, 136, 138, 286, 287, 466, 467, /* 5 */
+    597, 596, 401, 400, 237, 236, 105, 104,    3,   5,    7,    9,   11,   13,   15,   17,   19,  21,   23,  25,  27, 140, 141, 288, 289, 468, 469, /* 6 */
+    595, 594, 399, 398, 235, 234, 103, 102,    2,   4,    6,    8,   10,   12,   14,   16,   18,  20,   22,  24,  26, 142, 143, 290, 291, 470, 471, /* 7 */
+    593, 592, 397, 396, 233, 232, 101, 100,    1,   1, 2000, 2001, 2002, 2003, 2004, 2005, 2006,   0,    1,  28,  29, 144, 145, 292, 293, 472, 473, /* 8 */
+    591, 590, 395, 394, 231, 230,  99,  98,    1,   1,    1,    1,    1,    1,    1,    1,    1,   1,    1,  30,  31, 146, 147, 294, 295, 474, 475, /* 9 */
+    589, 588, 393, 392, 229, 228,  97,  96, 2027,   1,    0,    0,    0,    0,    0,    0,    0,   1, 2007,  32,  33, 148, 149, 296, 297, 476, 477, /* 10 */
+    587, 586, 391, 390, 227, 226,  95,  94, 2026,   1,    0,    1,    1,    1,    1,    1,    0,   1, 2008,  34,  35, 150, 151, 298, 299, 478, 479, /* 11 */
+    585, 584, 389, 388, 225, 224,  93,  92, 2025,   1,    0,    1,    0,    0,    0,    1,    0,   1, 2009,  36,  37, 152, 153, 300, 301, 480, 481, /* 12 */
+    583, 582, 387, 386, 223, 222,  91,  90, 2024,   1,    0,    1,    0,    1,    0,    1,    0,   1, 2010,  38,  39, 154, 155, 302, 303, 482, 483, /* 13 */
+    581, 580, 385, 384, 221, 220,  89,  88, 2023,   1,    0,    1,    0,    0,    0,    1,    0,   1, 2011,  40,  41, 156, 157, 304, 305, 484, 485, /* 14 */
+    579, 578, 383, 382, 219, 218,  87,  86, 2022,   1,    0,    1,    1,    1,    1,    1,    0,   1, 2012,  42,  43, 158, 159, 306, 307, 486, 487, /* 15 */
+    577, 576, 381, 380, 217, 216,  85,  84, 2021,   1,    0,    0,    0,    0,    0,    0,    0,   1, 2013,  44,  45, 160, 161, 308, 309, 488, 489, /* 16 */
+    575, 574, 379, 378, 215, 214,  83,  82,    0,   1,    1,    1,    1,    1,    1,    1,    1,   1,    1,  46,  47, 162, 163, 310, 311, 490, 491, /* 17 */
+    573, 572, 377, 376, 213, 212,  81,  80,    0,   0, 2020, 2019, 2018, 2017, 2016, 2015, 2014,   0,    0,  48,  49, 164, 165, 312, 313, 492, 493, /* 18 */
+    571, 570, 375, 374, 211, 210,  78,  76,   74,  72,   70,   68,   66,   64,   62,   60,   58,  56,   54,  50,  51, 166, 167, 314, 315, 494, 495, /* 19 */
+    569, 568, 373, 372, 209, 208,  79,  77,   75,  73,   71,   69,   67,   65,   63,   61,   59,  57,   55,  52,  53, 168, 169, 316, 317, 496, 497, /* 20 */
+    567, 566, 371, 370, 206, 204, 202, 200,  198, 196,  194,  192,  190,  188,  186,  184,  182, 180,  178, 176, 174, 170, 171, 318, 319, 498, 499, /* 21 */
+    565, 564, 369, 368, 207, 205, 203, 201,  199, 197,  195,  193,  191,  189,  187,  185,  183, 181,  179, 177, 175, 172, 173, 320, 321, 500, 501, /* 22 */
+    563, 562, 366, 364, 362, 360, 358, 356,  354, 352,  350,  348,  346,  344,  342,  340,  338, 336,  334, 332, 330, 328, 326, 322, 323, 502, 503, /* 23 */
+    561, 560, 367, 365, 363, 361, 359, 357,  355, 353,  351,  349,  347,  345,  343,  341,  339, 337,  335, 333, 331, 329, 327, 324, 325, 504, 505, /* 24 */
+    558, 556, 554, 552, 550, 548, 546, 544,  542, 540,  538,  536,  534,  532,  530,  528,  526, 524,  522, 520, 518, 516, 514, 512, 510, 506, 507, /* 25 */
+    559, 557, 555, 553, 551, 549, 547, 545,  543, 541,  539,  537,  535,  533,  531,  529,  527, 525,  523, 521, 519, 517, 515, 513, 511, 508, 509, /* 26 */
+    /* 0   1    2    3    4    5    6    7     8    9    10    11    12    13    14    15    16   17    18   19   20   21   22   23   24   25   26 */
+};
+
+/* Pre-calculated finder, descriptor, orientation mappings for full-range symbol */
+static const short AztecMapCore[15][15] = {
+    {     1,     1, 20000, 20001, 20002, 20003, 20004,     0, 20005, 20006, 20007, 20008, 20009,     0,     1, },
+    {     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1, },
+    { 20039,     1,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     1, 20010, },
+    { 20038,     1,     0,     1,     1,     1,     1,     1,     1,     1,     1,     1,     0,     1, 20011, },
+    { 20037,     1,     0,     1,     0,     0,     0,     0,     0,     0,     0,     1,     0,     1, 20012, },
+    { 20036,     1,     0,     1,     0,     1,     1,     1,     1,     1,     0,     1,     0,     1, 20013, },
+    { 20035,     1,     0,     1,     0,     1,     0,     0,     0,     1,     0,     1,     0,     1, 20014, },
+    {     0,     1,     0,     1,     0,     1,     0,     1,     0,     1,     0,     1,     0,     1,     0, },
+    { 20034,     1,     0,     1,     0,     1,     0,     0,     0,     1,     0,     1,     0,     1, 20015, },
+    { 20033,     1,     0,     1,     0,     1,     1,     1,     1,     1,     0,     1,     0,     1, 20016, },
+    { 20032,     1,     0,     1,     0,     0,     0,     0,     0,     0,     0,     1,     0,     1, 20017, },
+    { 20031,     1,     0,     1,     1,     1,     1,     1,     1,     1,     1,     1,     0,     1, 20018, },
+    { 20030,     1,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     1, 20019, },
+    {     0,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1,     1, },
+    {     0,     0, 20029, 20028, 20027, 20026, 20025,     0, 20024, 20023, 20022, 20021, 20020,     0,     0, },
+};
+
+/* Modes */
+#define AZ_U  0
+#define AZ_L  1
+#define AZ_M  2
+#define AZ_P  3
+#define AZ_D  4
+
+/* Pseudo-modes */
+#define AZ_B  5 /* Byte */
+#define AZ_X  6 /* Indicates chars belonging to more than one mode */
+#define AZ_E  7 /* Signals no next mode */
+
+#define AZ_NUM_MODES 5
+
+#define AZ_MASK(m)  ((m) & 0x0F)
+
+#define AZ_PS   0x10
+#define AZ_US   0x20
+
+/* P/S */
+#define AZ_U_PS (AZ_U | AZ_PS)
+#define AZ_L_PS (AZ_L | AZ_PS)
+#define AZ_M_PS (AZ_M | AZ_PS)
+#define AZ_D_PS (AZ_D | AZ_PS)
+
+/* U/S */
+#define AZ_L_US (AZ_L | AZ_US)
+#define AZ_D_US (AZ_D | AZ_US)
+
+static const char AztecModes[128] = {
+    AZ_B, AZ_M, AZ_M, AZ_M, AZ_M, AZ_M, AZ_M, AZ_M, AZ_M, AZ_M, AZ_M, AZ_M, AZ_M, AZ_X, AZ_B, AZ_B, /*0-15*/
+    AZ_B, AZ_B, AZ_B, AZ_B, AZ_B, AZ_B, AZ_B, AZ_B, AZ_B, AZ_B, AZ_B, AZ_M, AZ_M, AZ_M, AZ_M, AZ_M, /*16-31*/
+    AZ_X, AZ_P, AZ_P, AZ_P, AZ_P, AZ_P, AZ_P, AZ_P, AZ_P, AZ_P, AZ_P, AZ_P, AZ_X, AZ_P, AZ_X, AZ_P, /*32-47*/
+    AZ_D, AZ_D, AZ_D, AZ_D, AZ_D, AZ_D, AZ_D, AZ_D, AZ_D, AZ_D, AZ_P, AZ_P, AZ_P, AZ_P, AZ_P, AZ_P, /*48-63*/
+    AZ_M, AZ_U, AZ_U, AZ_U, AZ_U, AZ_U, AZ_U, AZ_U, AZ_U, AZ_U, AZ_U, AZ_U, AZ_U, AZ_U, AZ_U, AZ_U, /*64-79*/
+    AZ_U, AZ_U, AZ_U, AZ_U, AZ_U, AZ_U, AZ_U, AZ_U, AZ_U, AZ_U, AZ_U, AZ_P, AZ_M, AZ_P, AZ_M, AZ_M, /*80-95*/
+    AZ_M, AZ_L, AZ_L, AZ_L, AZ_L, AZ_L, AZ_L, AZ_L, AZ_L, AZ_L, AZ_L, AZ_L, AZ_L, AZ_L, AZ_L, AZ_L, /*96-111*/
+    AZ_L, AZ_L, AZ_L, AZ_L, AZ_L, AZ_L, AZ_L, AZ_L, AZ_L, AZ_L, AZ_L, AZ_P, AZ_M, AZ_P, AZ_M, AZ_M  /*112-127*/
+};
+
+/* Testable flags */
+#define AZ_U_F  0x01    /* 1 << AZ_U */
+#define AZ_L_F  0x02    /* 1 << AZ_L */
+#define AZ_M_F  0x04    /* 1 << AZ_M */
+#define AZ_P_F  0x08    /* 1 << AZ_P */
+#define AZ_D_F  0x10    /* 1 << AZ_D */
+
+/* Flag version of `AztecModes[]` */
+static const char AztecFlags[128] = {
+                                   0,          AZ_M_F,          AZ_M_F,          AZ_M_F, /*  0-3*/
+                              AZ_M_F,          AZ_M_F,          AZ_M_F,          AZ_M_F, /*  4-7*/
+                              AZ_M_F,          AZ_M_F,          AZ_M_F,          AZ_M_F, /*  8-11*/
+                              AZ_M_F, AZ_M_F | AZ_P_F,               0,               0, /* 12-15*/
+                                   0,               0,               0,               0, /* 16-19*/
+                                   0,               0,               0,               0, /* 20-23*/
+                                   0,               0,               0,          AZ_M_F, /* 24-27*/
+                              AZ_M_F,          AZ_M_F,          AZ_M_F,          AZ_M_F, /* 28-31*/
+   AZ_U_F | AZ_L_F | AZ_M_F | AZ_D_F,          AZ_P_F,          AZ_P_F,          AZ_P_F, /* 32-35*/
+                              AZ_P_F,          AZ_P_F,          AZ_P_F,          AZ_P_F, /* 36-39*/
+                              AZ_P_F,          AZ_P_F,          AZ_P_F,          AZ_P_F, /* 40-43*/
+                     AZ_P_F | AZ_D_F,          AZ_P_F, AZ_P_F | AZ_D_F,          AZ_P_F, /* 44-47*/
+                              AZ_D_F,          AZ_D_F,          AZ_D_F,          AZ_D_F, /* 48-51*/
+                              AZ_D_F,          AZ_D_F,          AZ_D_F,          AZ_D_F, /* 52-55*/
+                              AZ_D_F,          AZ_D_F,          AZ_P_F,          AZ_P_F, /* 56-59*/
+                              AZ_P_F,          AZ_P_F,          AZ_P_F,          AZ_P_F, /* 60-63*/
+                              AZ_M_F,          AZ_U_F,          AZ_U_F,          AZ_U_F, /* 64-67*/
+                              AZ_U_F,          AZ_U_F,          AZ_U_F,          AZ_U_F, /* 68-71*/
+                              AZ_U_F,          AZ_U_F,          AZ_U_F,          AZ_U_F, /* 72-75*/
+                              AZ_U_F,          AZ_U_F,          AZ_U_F,          AZ_U_F, /* 76-79*/
+                              AZ_U_F,          AZ_U_F,          AZ_U_F,          AZ_U_F, /* 80-83*/
+                              AZ_U_F,          AZ_U_F,          AZ_U_F,          AZ_U_F, /* 84-87*/
+                              AZ_U_F,          AZ_U_F,          AZ_U_F,          AZ_P_F, /* 88-91*/
+                              AZ_M_F,          AZ_P_F,          AZ_M_F,          AZ_M_F, /* 92-95*/
+                              AZ_M_F,          AZ_L_F,          AZ_L_F,          AZ_L_F, /* 96-99*/
+                              AZ_L_F,          AZ_L_F,          AZ_L_F,          AZ_L_F, /* 100-103*/
+                              AZ_L_F,          AZ_L_F,          AZ_L_F,          AZ_L_F, /* 104-107*/
+                              AZ_L_F,          AZ_L_F,          AZ_L_F,          AZ_L_F, /* 108-111*/
+                              AZ_L_F,          AZ_L_F,          AZ_L_F,          AZ_L_F, /* 112-115*/
+                              AZ_L_F,          AZ_L_F,          AZ_L_F,          AZ_L_F, /* 116-119*/
+                              AZ_L_F,          AZ_L_F,          AZ_L_F,          AZ_P_F, /* 120-123*/
+                              AZ_M_F,          AZ_P_F,          AZ_M_F,          AZ_M_F, /* 124-127*/
+};
+
+/* The number of bits latch takes (AZ_B column used in FAST_MODE only) */
+static const char AztecLatchNum[5][6] = {
+    /*      U   L   M   P   D   B */
+    /*U*/ { 0,  5,  5, 10,  5,  5 },
+    /*L*/ { 9,  0,  5, 10,  5,  5 },
+    /*M*/ { 5,  5,  0,  5, 10,  5 },
+    /*P*/ { 5, 10, 10,  0, 10, 10 },
+    /*D*/ { 4,  9,  9, 14,  0,  9 },
+};
+
+/* Bit pattern to latch (AZ_B column used in FAST_MODE only) */
+static const short AztecLatch[5][6] = {
+    /*                   U               L               M                            P               D               B */
+    /*U*/ {              0,             28,             29,              (29 << 5) + 30,             30,             31 },
+    /*L*/ { (30 << 4) + 14,              0,             29,              (29 << 5) + 30,             30,             31 },
+    /*M*/ {             29,             28,              0,                          30, (29 << 5) + 30,             31 },
+    /*P*/ {             31, (31 << 5) + 28, (31 << 5) + 29,                           0, (31 << 5) + 30, (31 << 5) + 31 },
+    /*D*/ {             14, (14 << 5) + 28, (14 << 5) + 29, (14 << 10) + (29 << 5) + 30,              0, (14 << 5) + 31 },
+};
+
+/* From Table 2 */
+static const char AztecChar[5][128] = {
+    { /* AZ_U */
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*0-15*/
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*16-31*/
+        1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*32-47*/
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*48-63*/
+        0,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, /*64-79*/
+       17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,  0,  0,  0,  0,  0, /*80-95*/
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*96-111*/
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0  /*112-127*/
+    }, { /* AZ_L */
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*0-15*/
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*16-31*/
+        1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*32-47*/
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*48-63*/
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*64-79*/
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*80-95*/
+        0,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, /*96-111*/
+       17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,  0,  0,  0,  0,  0  /*112-127*/
+    }, { /* AZ_M */
+        0,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14,  0,  0, /*0-15*/
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 15, 16, 17, 18, 19, /*16-31*/
+        1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*32-47*/
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*48-63*/
+       20,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*64-79*/
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 21,  0, 22, 23, /*80-95*/
+       24,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*96-111*/
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 25,  0, 26, 27  /*112-127*/
+    }, { /* AZ_P with [abcd] mapped to doubles */
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0, /*0-15*/
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*16-31*/
+        0,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, /*32-47*/
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 21, 22, 23, 24, 25, 26, /*48-63*/
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*64-79*/
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 27,  0, 28,  0,  0, /*80-95*/
+        0,  2,  3,  4,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*96-111*/
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 29,  0, 30,  0,  0  /*112-127*/
+    }, { /* AZ_D */
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*0-15*/
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*16-31*/
+        1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 12,  0, 13,  0, /*32-47*/
+        2,  3,  4,  5,  6,  7,  8,  9, 10, 11,  0,  0,  0,  0,  0,  0, /*48-63*/
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*64-79*/
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*80-95*/
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, /*96-111*/
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0  /*112-127*/
+    }
+};
+
+/* A map showing the available shift codes (B/S not shown) */
+static const signed char AztecShift[5][5] = {
+    /*       U   L   M   P   D */
+    /*U*/ { -1, -1, -1,  0, -1 },
+    /*L*/ { 28, -1, -1,  0, -1 },
+    /*M*/ { -1, -1, -1,  0, -1 },
+    /*P*/ { -1, -1, -1, -1, -1 },
+    /*D*/ { 15, -1, -1,  0, -1 },
+};
+
+/* Codewords per symbol */
+static const short AztecSizes[32] = {
+     21,  48,  60,  88, 120,  156, 196, 240,  230,  272,  316,  364,  416,  470,  528,  588,
+    652, 720, 790, 864, 940, 1020, 920, 992, 1066, 1144, 1224, 1306, 1392, 1480, 1570, 1664
+};
+
+static const short AztecCompactSizes[4] = {
+    17, 40, 51, 64 /* 64 data blocks (Mode Message max) but 76 altogether */
+};
+
+/* Tables `AztecDataSizes` and `AztecCompactDataSizes` generated by "backend/tools/gen_aztec_data_sizes.php" */
+static const short AztecDataSizes[4][32] = { {
+        /* Data bits per symbol maximum with 10% error correction */
+          95,  241,  408,  609,  840, 1099, 1387,  1704,  2040,  2418,  2814,  3246,  3714,  4200,  4722,  5262,
+        5838, 6450, 7080, 7746, 8430, 9150, 9900, 10677, 11476, 12319, 13183, 14068, 14997, 15948, 16920, 17935
+    }, {
+        /* Data bits per symbol maximum with 23% error correction */
+          79,  203,  345,  518,  715,  936, 1183,  1454,  1741,  2064,  2403,  2772,  3173,  3589,  4035,  4497,
+        4990, 5514, 6053, 6622, 7208, 7824, 8464,  9130,  9813, 10534, 11273, 12031, 12826, 13639, 14470, 15339
+    }, {
+        /* Data bits per symbol maximum with 36% error correction */
+          62,  166,  283,  426,  590,  774,  979,  1204,  1442,  1710,  1992,  2299,  2632,  2978,  3349,  3733,
+        4142, 4578, 5026, 5499, 5986, 6498, 7029,  7582,  8150,  8749,  9364,  9994, 10654, 11330, 12021, 12743
+    }, {
+        /* Data bits per symbol maximum with 50% error correction */
+          45,  126,  216,  328,  456,  600,  760,   936,  1120,  1330,  1550,  1790,  2050,  2320,  2610,  2910,
+        3230, 3570, 3920, 4290, 4670, 5070, 5484,  5916,  6360,  6828,  7308,  7800,  8316,  8844,  9384,  9948
+    }
+};
+
+static const short AztecCompactDataSizes[4][4] = { {
+        /* Data bits per symbol maximum with 10% error correction */
+        73, 198, 343, 512 /* Max 64 * 8 */
+    }, {
+        /* Data bits per symbol maximum with 23% error correction */
+        60, 166, 290, 444
+    }, {
+        /* Data bits per symbol maximum with 36% error correction */
+        47, 135, 237, 365
+    }, {
+        /* Data bits per symbol maximum with 50% error correction */
+        33, 102, 180, 280
+    }
+};
+
+/* Reference grid offsets */
+static const char AztecOffset[32] = {
+    66, 64, 62, 60, 57, 55, 53, 51, 49, 47, 45, 42, 40, 38, 36, 34,
+    32, 30, 28, 25, 23, 21, 19, 17, 15, 13, 10,  8,  6,  4,  2,  0
+};
+
+static const char AztecCompactOffset[4] = {
+    6, 4, 2, 0
+};
+
+static const unsigned char AztecMapGridYOffsets[8] = {
+    27, 43, 59, 75, 91, 107, 123, 139
+};
+
+/* vim: set ts=4 sw=4 et : */
+#endif /* Z_AZTEC_H */
